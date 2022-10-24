@@ -57,12 +57,15 @@ class GoogleSheetsApi {
           await _worksheet!.values.value(column: 2, row: i + 1);
       final String transactionType =
           await _worksheet!.values.value(column: 3, row: i + 1);
+      final String transactionDay =
+          await _worksheet!.values.value(column: 4, row: i + 1);
 
       if (currentTransactions.length < numberOfTransactions) {
         currentTransactions.add([
           transactionName,
           transactionAmount,
           transactionType,
+          transactionDay,
         ]);
       }
     }
@@ -72,18 +75,21 @@ class GoogleSheetsApi {
   }
 
   // insert a new transaction
-  static Future insert(String name, String amount, bool _isIncome) async {
+  static Future insert(
+      String name, String amount, bool _isIncome, String day) async {
     if (_worksheet == null) return;
     numberOfTransactions++;
     currentTransactions.add([
       name,
       amount,
       _isIncome == true ? 'income' : 'expense',
+      day,
     ]);
     await _worksheet!.values.appendRow([
       name,
       amount,
       _isIncome == true ? 'income' : 'expense',
+      day,
     ]);
   }
 

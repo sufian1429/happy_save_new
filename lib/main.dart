@@ -61,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final _textcontrollerITEM = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isIncome = false;
+  final _textcontrollerDay = TextEditingController();
   // ignore: unused_element
   void _incrementCounter() {
     setState(() {
@@ -73,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _textcontrollerITEM.text,
       _textcontrollerAMOUNT.text,
       _isIncome,
+      _textcontrollerDay.text,
     );
     setState(() {});
   }
@@ -119,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 validator: (text) {
                                   if (text == null || text.isEmpty) {
-                                    return 'Enter an amount';
+                                    return 'กรุณาระบุเป็นตัวเลข';
                                   }
                                   return null;
                                 },
@@ -234,6 +236,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                         .currentTransactions[index][1],
                                     expenseOrIncome: GoogleSheetsApi
                                         .currentTransactions[index][2],
+                                    day: GoogleSheetsApi
+                                        .currentTransactions[index][3],
                                   );
                                 }),
                       )

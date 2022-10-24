@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:ocr/google_sheets_api.dart';
 import 'package:ocr/main.dart';
+import 'package:ocr/transaction.dart';
 
 class RecognizePage extends StatefulWidget {
   final String? path;
@@ -46,7 +47,7 @@ class _RecognizePageState extends State<RecognizePage> {
               ));
   }
 
-  void processImage(InputImage image) async {
+  Future<MyTransaction> processImage(InputImage image) async {
     final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
 
     setState(() {
@@ -63,5 +64,10 @@ class _RecognizePageState extends State<RecognizePage> {
     setState(() {
       _isBusy = false;
     });
+    return MyTransaction(
+        day: recognizedText.text,
+        expenseOrIncome: recognizedText.text,
+        money: recognizedText.text,
+        transactionName: recognizedText.text);
   }
 }

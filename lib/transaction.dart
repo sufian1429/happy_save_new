@@ -5,11 +5,13 @@ class MyTransaction extends StatelessWidget {
   final String transactionName;
   final String money;
   final String expenseOrIncome;
+  final String day;
 
-  MyTransaction({
+  MyTransaction( {
     required this.transactionName,
     required this.money,
     required this.expenseOrIncome,
+    required this.day,
   });
 
   @override
@@ -49,12 +51,17 @@ class MyTransaction extends StatelessWidget {
                 ],
               ),
               Text(
-                (expenseOrIncome == 'expense' ? '-' : '+') + '\฿' + money + ' '
+                (expenseOrIncome == 'expense' ? '-' : '+') +
+                    '\฿' +
+                    money +
+                    ' ' +
+                    day
+
                 // +
                 // (DateFormat("dd/MM/yyyy").format(date.date))
                 ,
                 style: TextStyle(
-                  //fontWeight: FontWeight.bold,
+                  // fontWeight: FontWeight.bold,
                   fontSize: 16,
                   color:
                       expenseOrIncome == 'expense' ? Colors.red : Colors.green,
