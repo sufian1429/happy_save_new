@@ -10,7 +10,7 @@ import 'package:ocr/Utils/image_cropper_page.dart';
 import 'package:ocr/Utils/image_picker_class.dart';
 import 'package:ocr/Widgets/modal_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:intl/intl.dart';
 import 'google_sheets_api.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -57,6 +57,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   // int _counter = 0;
+  String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
   final _textcontrollerAMOUNT = TextEditingController();
   final _textcontrollerITEM = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -74,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _textcontrollerITEM.text,
       _textcontrollerAMOUNT.text,
       _isIncome,
-      _textcontrollerDay.text,
+      formattedDate,
     );
     setState(() {});
   }
