@@ -20,12 +20,12 @@ import 'plus_button.dart';
 import 'top_card.dart';
 import 'transaction.dart';
 
-final Uri _url = Uri.parse(
-    'https://docs.google.com/spreadsheets/d/1BSrxKH_6NIMa2zJa1OSG8LgeBc2YoKmBt1Mla508Mrk/edit?usp=sharing');
+// final Uri _url = Uri.parse(
+//     'https://docs.google.com/spreadsheets/d/1BSrxKH_6NIMa2zJa1OSG8LgeBc2YoKmBt1Mla508Mrk/edit?usp=sharing');
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  GoogleSheetsApi().init();
+  GoogleSheetsApi().init1();
   runApp(const MyApp());
 }
 
@@ -45,6 +45,21 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+var myMenuItems = <String>[
+  'มกราคม',
+  'กุมภาพันธ์',
+  'มีนาคม',
+  'เมษายน',
+  'พฤษภาคม',
+  'มิถุนายน',
+  'กรกฎาคม',
+  'สิงหาคม',
+  'กันยายน',
+  'ตุลาคม',
+  'พฤศจิกายน',
+  'ธันวาคม',
+];
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -71,6 +86,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _enterTransaction() {
+    GoogleSheetsApi.insert(
+      _textcontrollerITEM.text,
+      _textcontrollerAMOUNT.text,
+      _isIncome,
+      formattedDate,
+    );
+    setState(() {});
+  }
+
+  void _deleteTransaction() {
     GoogleSheetsApi.insert(
       _textcontrollerITEM.text,
       _textcontrollerAMOUNT.text,
@@ -251,38 +276,17 @@ class _MyHomePageState extends State<MyHomePage> {
               function: _newTransaction,
             ),
             Row(children: <Widget>[
-              // Image.network(
-              //   "https://c.tenor.com/8B8LF82M-2MAAAAM/bubble-ape.gif",
-              //   width: 80,
-              //   height: 50,
-              //   fit: BoxFit.cover,
-              // ),
-              GestureDetector(
-                onTap: _launchUrl,
-                child: Container(
-                  height: 70,
-                  width: 70,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Center(
-                    child: Image.network(
-                      "https://cdn-icons-png.flaticon.com/128/324/324127.png",
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.fill,
-                      // color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ),
-              // Image.network(
-              //   "https://cdn.fbsbx.com/v/t59.2708-21/283400046_2816329988512543_7651822647683269049_n.gif?_nc_cat=108&ccb=1-7&_nc_sid=041f46&_nc_ohc=D667F_B1cgsAX-SGnvZ&_nc_ht=cdn.fbsbx.com&oh=03_AVLXQH0ty0ycWFdQK48utmiYCrWAUxM8kkLTHwdSnIXm9g&oe=63327622",
-              //   width: 60,
-              //   height: 60,
-              //   fit: BoxFit.cover,
-              // ),
+              PopupMenuButton<String>(
+                  onSelected: (String result) {},
+                  color: Colors.green[100],
+                  itemBuilder: (BuildContext context) {
+                    return myMenuItems.map((String choice) {
+                      return PopupMenuItem<String>(
+                        child: Text(choice),
+                        value: choice,
+                      );
+                    }).toList();
+                  })
             ])
           ],
         ),
@@ -356,8 +360,8 @@ class _MyHomePageState extends State<MyHomePage> {
 //   //   print("Try again");
 //   // }
 // }
-Future<void> _launchUrl() async {
-  if (!await launchUrl(_url)) {
-    throw 'Could not launch $_url';
-  }
-}
+// Future<void> _launchUrl() async {
+//   if (!await launchUrl(_url)) {
+//     throw 'Could not launch $_url';
+//   }
+// }

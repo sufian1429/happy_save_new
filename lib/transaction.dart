@@ -6,8 +6,9 @@ class MyTransaction extends StatelessWidget {
   final String money;
   final String expenseOrIncome;
   final String day;
+  final _formKey = GlobalKey<FormState>();
 
-  MyTransaction( {
+  MyTransaction({
     required this.transactionName,
     required this.money,
     required this.expenseOrIncome,
@@ -18,19 +19,20 @@ class MyTransaction extends StatelessWidget {
   Widget build(BuildContext context) {
     var date;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0),
+      padding: const EdgeInsets.only(bottom: 10),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Container(
-          padding: EdgeInsets.all(15),
+          padding: EdgeInsets.all(20),
           color: Colors.grey[100],
           child: Row(
+            key: _formKey,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(5),
+                    padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle, color: Colors.yellow[600]),
                     child: Center(
@@ -51,11 +53,11 @@ class MyTransaction extends StatelessWidget {
                 ],
               ),
               Text(
-                (expenseOrIncome == 'expense' ? '-' : '+') +
+                day +
+                    '   ' +
+                    (expenseOrIncome == 'expense' ? '-' : '+') +
                     '\฿' +
-                    money +
-                    ' ' +
-                    day
+                    money
 
                 // +
                 // (DateFormat("dd/MM/yyyy").format(date.date))
@@ -67,6 +69,16 @@ class MyTransaction extends StatelessWidget {
                       expenseOrIncome == 'expense' ? Colors.red : Colors.green,
                 ),
               ),
+              MaterialButton(
+                color: Colors.red[600],
+                child: Text('ลบ', style: TextStyle(color: Colors.white)),
+                onPressed: () {
+                  // if (_formKey.currentState!.validate()) {
+                  //   // _enterTransaction();
+                  Navigator.of(context).pop();
+                  // }
+                },
+              )
             ],
           ),
         ),

@@ -29,9 +29,75 @@ class GoogleSheetsApi {
   static bool loading = true;
 
   // initialise the spreadsheet!
-  Future init() async {
+  Future init1() async {
     final ss = await _gsheets.spreadsheet(_spreadsheetId);
-    _worksheet = ss.worksheetByTitle('Worksheet1');
+    _worksheet = ss.worksheetByTitle('มกราคม');
+    countRows();
+  }
+
+  Future init2() async {
+    final ss = await _gsheets.spreadsheet(_spreadsheetId);
+    _worksheet = ss.worksheetByTitle('กุมภาพันธ์');
+    countRows();
+  }
+
+  Future init3() async {
+    final ss = await _gsheets.spreadsheet(_spreadsheetId);
+    _worksheet = ss.worksheetByTitle('มีนาคม');
+    countRows();
+  }
+
+  Future init4() async {
+    final ss = await _gsheets.spreadsheet(_spreadsheetId);
+    _worksheet = ss.worksheetByTitle('เมษายน');
+    countRows();
+  }
+
+  Future init5() async {
+    final ss = await _gsheets.spreadsheet(_spreadsheetId);
+    _worksheet = ss.worksheetByTitle('พฤษภาคม');
+    countRows();
+  }
+
+  Future init6() async {
+    final ss = await _gsheets.spreadsheet(_spreadsheetId);
+    _worksheet = ss.worksheetByTitle('มิถุนายน');
+    countRows();
+  }
+
+  Future init7() async {
+    final ss = await _gsheets.spreadsheet(_spreadsheetId);
+    _worksheet = ss.worksheetByTitle('กรกฎาคม');
+    countRows();
+  }
+
+  Future init8() async {
+    final ss = await _gsheets.spreadsheet(_spreadsheetId);
+    _worksheet = ss.worksheetByTitle('สิงหาคม');
+    countRows();
+  }
+
+  Future init9() async {
+    final ss = await _gsheets.spreadsheet(_spreadsheetId);
+    _worksheet = ss.worksheetByTitle('กันยายน');
+    countRows();
+  }
+
+  Future init10() async {
+    final ss = await _gsheets.spreadsheet(_spreadsheetId);
+    _worksheet = ss.worksheetByTitle('ตุลาคม');
+    countRows();
+  }
+
+  Future init11() async {
+    final ss = await _gsheets.spreadsheet(_spreadsheetId);
+    _worksheet = ss.worksheetByTitle('พฤศจิกายน');
+    countRows();
+  }
+
+  Future init12() async {
+    final ss = await _gsheets.spreadsheet(_spreadsheetId);
+    _worksheet = ss.worksheetByTitle('ธันวาคม');
     countRows();
   }
 
