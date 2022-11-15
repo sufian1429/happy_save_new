@@ -19,7 +19,7 @@ class RecognizePage extends StatefulWidget {
 class _RecognizePageState extends State<RecognizePage> {
   bool _isBusy = false;
 
-  String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  String formattedDate = DateFormat('yyyy/MM/dd').format(DateTime.now());
   TextEditingController amountController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   void _enter() {

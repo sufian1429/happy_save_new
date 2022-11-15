@@ -1,23 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+String formattedDate = DateFormat('yyyy/MM/dd').format(DateTime.now());
+
 class MyTransaction extends StatelessWidget {
   final String transactionName;
   final String money;
   final String expenseOrIncome;
-  final String day;
+  final String formattedDate;
+
   final _formKey = GlobalKey<FormState>();
 
   MyTransaction({
     required this.transactionName,
     required this.money,
     required this.expenseOrIncome,
-    required this.day,
+    required this.formattedDate,
   });
 
   @override
   Widget build(BuildContext context) {
-    var date;
+    // String day1;
+    // print(int.parse(day));
+    // if (int.parse(day) > 4000) {
+    //   DateTime epoch = DateTime(1899, 12, 30);
+    //   DateTime currentDate = epoch.add(Duration(days: int.parse(day)));
+    //   day1 = DateFormat('yyyy/MM/dd').format(currentDate);
+    //   print(currentDate);
+    // } else {
+    //   day1 = day;
+    // }
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: ClipRRect(
@@ -53,15 +66,12 @@ class MyTransaction extends StatelessWidget {
                 ],
               ),
               Text(
-                day +
-                    '   ' +
+                '  ' +
                     (expenseOrIncome == 'expense' ? '-' : '+') +
                     '\฿' +
-                    money
-
-                // +
-                // (DateFormat("dd/MM/yyyy").format(date.date))
-                ,
+                    money +
+                    '  ||  ' +
+                    formattedDate,
                 style: TextStyle(
                   // fontWeight: FontWeight.bold,
                   fontSize: 16,
@@ -69,16 +79,23 @@ class MyTransaction extends StatelessWidget {
                       expenseOrIncome == 'expense' ? Colors.red : Colors.green,
                 ),
               ),
-              MaterialButton(
-                color: Colors.red[600],
-                child: Text('ลบ', style: TextStyle(color: Colors.white)),
-                onPressed: () {
-                  // if (_formKey.currentState!.validate()) {
-                  //   // _enterTransaction();
-                  Navigator.of(context).pop();
-                  // }
-                },
-              )
+              // MaterialButton(
+              //   color: Colors.red[600],
+              //   child: Text('ลบ', style: TextStyle(color: Colors.white)),
+              //   onPressed: () {
+              //     Navigator.of(context).pop();
+              //   },
+              // ),
+              // MaterialButton(
+              //   color: Colors.red[600],
+              //   child: Text('ลบ', style: TextStyle(color: Colors.white)),
+              //   onPressed: () {
+              //     // if (_formKey.currentState!.validate()) {
+              //     //   // _enterTransaction();
+              //     Navigator.of(context).pop();
+              //     // }
+              //   },
+              // )
             ],
           ),
         ),

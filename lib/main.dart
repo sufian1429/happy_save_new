@@ -20,12 +20,12 @@ import 'plus_button.dart';
 import 'top_card.dart';
 import 'transaction.dart';
 
-// final Uri _url = Uri.parse(
-//     'https://docs.google.com/spreadsheets/d/1BSrxKH_6NIMa2zJa1OSG8LgeBc2YoKmBt1Mla508Mrk/edit?usp=sharing');
+final Uri _url = Uri.parse(
+    'https://docs.google.com/spreadsheets/d/1BSrxKH_6NIMa2zJa1OSG8LgeBc2YoKmBt1Mla508Mrk/edit?usp=sharing');
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  GoogleSheetsApi().init1();
+
   runApp(const MyApp());
 }
 
@@ -41,25 +41,25 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const MyHomePage(title: 'Happy Save'),
+      home: MyHomePage(title: 'Happy Save'),
     );
   }
 }
 
-var myMenuItems = <String>[
-  'มกราคม',
-  'กุมภาพันธ์',
-  'มีนาคม',
-  'เมษายน',
-  'พฤษภาคม',
-  'มิถุนายน',
-  'กรกฎาคม',
-  'สิงหาคม',
-  'กันยายน',
-  'ตุลาคม',
-  'พฤศจิกายน',
-  'ธันวาคม',
-];
+// var myMenuItems = <String>[
+//   'มกราคม',
+//   'กุมภาพันธ์',
+//   'มีนาคม',
+//   'เมษายน',
+//   'พฤษภาคม',
+//   'มิถุนายน',
+//   'กรกฎาคม',
+//   'สิงหาคม',
+//   'กันยายน',
+//   'ตุลาคม',
+//   'พฤศจิกายน',
+//   'ธันวาคม',
+// ];
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -72,12 +72,29 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   // int _counter = 0;
-  String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+  String formattedDate = DateFormat('yyyy/MM/dd').format(DateTime.now());
+
   final _textcontrollerAMOUNT = TextEditingController();
   final _textcontrollerITEM = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isIncome = false;
-  final _textcontrollerDay = TextEditingController();
+  List<String> list = <String>[
+    'มกราคม',
+    'กุมภาพันธ์',
+    'มีนาคม',
+    'เมษายน',
+    'พฤษภาคม',
+    'มิถุนายน',
+    'กรกฎาคม',
+    'สิงหาคม',
+    'กันยายน',
+    'ตุลาคม',
+    'พฤศจิกายน',
+    'ธันวาคม',
+  ];
+  String? value;
+
   // ignore: unused_element
   void _incrementCounter() {
     setState(() {
@@ -95,15 +112,15 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
-  void _deleteTransaction() {
-    GoogleSheetsApi.insert(
-      _textcontrollerITEM.text,
-      _textcontrollerAMOUNT.text,
-      _isIncome,
-      formattedDate,
-    );
-    setState(() {});
-  }
+  // void _deleteTransaction() {
+  //   GoogleSheetsApi.insert(
+  //     _textcontrollerITEM.text,
+  //     _textcontrollerAMOUNT.text,
+  //     _isIncome,
+  //     formattedDate,
+  //   );
+  //   setState(() {});
+  // }
 
   void _newTransaction() {
     showDialog(
@@ -214,6 +231,14 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+  //       value: item,
+  //       child: Text(
+  //         item,
+  //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+  //       ),
+  //     );
+
   @override
   Widget build(BuildContext context) {
     // start loading until the data arrives
@@ -225,11 +250,17 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
+
       backgroundColor: Colors.grey[300],
       body: Padding(
         padding: const EdgeInsets.all(25.0),
         child: Column(
           children: [
+            ElevatedButton(
+                child: Text('Google Sheets'),
+                onPressed: () {
+                  launchUrl(_url);
+                }),
             SizedBox(
               height: 5,
             ),
@@ -262,7 +293,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                         .currentTransactions[index][1],
                                     expenseOrIncome: GoogleSheetsApi
                                         .currentTransactions[index][2],
-                                    day: GoogleSheetsApi
+                                    formattedDate: GoogleSheetsApi
                                         .currentTransactions[index][3],
                                   );
                                 }),
@@ -276,17 +307,140 @@ class _MyHomePageState extends State<MyHomePage> {
               function: _newTransaction,
             ),
             Row(children: <Widget>[
-              PopupMenuButton<String>(
-                  onSelected: (String result) {},
-                  color: Colors.green[100],
-                  itemBuilder: (BuildContext context) {
-                    return myMenuItems.map((String choice) {
-                      return PopupMenuItem<String>(
-                        child: Text(choice),
-                        value: choice,
-                      );
-                    }).toList();
-                  })
+              Container(
+                width: 120,
+                height: 45,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(color: Colors.green, width: 3),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    // value: value,
+                    // iconSize: 20,
+
+                    // icon: Icon(Icons.arrow_drop_down, color: Colors.black),
+                    isExpanded: true,
+                    value: value,
+                    icon: const Icon(Icons.arrow_drop_down,
+                        color: Colors.greenAccent),
+                    elevation: 10,
+                    style: const TextStyle(color: Colors.black),
+                    // underline: Container(
+                    //   height: 2,
+                    //   color: Colors.deepPurpleAccent,
+                    // ),
+                    items: list.map(buildMenuItem).toList(),
+                    onChanged: (value) => {
+                      if (value == 'มกราคม')
+                        {
+                          GoogleSheetsApi().init1(),
+                          this.value = value,
+                        }
+                      else if (value == 'กุมภาพันธ์')
+                        {
+                          GoogleSheetsApi().init2(),
+                          this.value = value,
+                        }
+                      else if (value == 'มีนาคม')
+                        {
+                          GoogleSheetsApi().init3(),
+                          this.value = value,
+                        }
+                      else if (value == 'เมษายน')
+                        {
+                          GoogleSheetsApi().init4(),
+                          this.value = value,
+                        }
+                      else if (value == 'พฤษภาคม')
+                        {
+                          GoogleSheetsApi().init5(),
+                          this.value = value,
+                        }
+                      else if (value == 'มิถุนายน')
+                        {
+                          GoogleSheetsApi().init6(),
+                          this.value = value,
+                        }
+                      else if (value == 'กรกฎาคม')
+                        {
+                          GoogleSheetsApi().init7(),
+                          this.value = value,
+                        }
+                      else if (value == 'สิงหาคม')
+                        {
+                          GoogleSheetsApi().init8(),
+                          this.value = value,
+                        }
+                      else if (value == 'กันยายน')
+                        {
+                          GoogleSheetsApi().init9(),
+                          this.value = value,
+                        }
+                      else if (value == 'ตุลาคม')
+                        {
+                          GoogleSheetsApi().init10(),
+                          this.value = value,
+                        }
+                      else if (value == 'พฤศจิกายน')
+                        {
+                          GoogleSheetsApi().init11(),
+                          this.value = value,
+                        }
+                      else if (value == 'ธันวาคม')
+                        {
+                          GoogleSheetsApi().init12(),
+                          this.value = value,
+                        }
+                    },
+                  ),
+                ),
+                // DropdownMenuItem<String>buildMenuItem(String item) => DropdownMenuItem(
+                //   value: item,
+                //   child: Text(
+                //     item,
+                //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                //   ),);
+                // PopupMenuButton<String>(
+                //     onSelected: (String result) {
+                //       print(result);
+
+                //       if (result == 'มกราคม') {
+                //         GoogleSheetsApi().init1();
+                //       } else if (result == 'กุมภาพันธ์') {
+                //         GoogleSheetsApi().init2();
+                //       } else if (result == 'มีนาคม') {
+                //         GoogleSheetsApi().init3();
+                //       } else if (result == 'เมษายน') {
+                //         GoogleSheetsApi().init4();
+                //       } else if (result == 'พฤษภาคม') {
+                //         GoogleSheetsApi().init5();
+                //       } else if (result == 'มิถุนายน') {
+                //         GoogleSheetsApi().init6();
+                //       } else if (result == 'กรกฎาคม') {
+                //         GoogleSheetsApi().init7();
+                //       } else if (result == 'สิงหาคม') {
+                //         GoogleSheetsApi().init8();
+                //       } else if (result == 'กันยายน') {
+                //         GoogleSheetsApi().init9();
+                //       } else if (result == 'ตุลาคม') {
+                //         GoogleSheetsApi().init10();
+                //       } else if (result == 'พฤศจิกายน') {
+                //         GoogleSheetsApi().init11();
+                //       } else if (result == 'ธันวาคม') {
+                //         GoogleSheetsApi().init12();
+                //       }
+                //     },
+                //     color: Colors.green[100],
+                //     itemBuilder: (BuildContext context) {
+                //       return myMenuItems.map((String choice) {
+                //         return PopupMenuItem<String>(
+                //           child: Text(choice),
+                //           value: choice,
+                //         );
+                //       }).toList();
+                //     })
+              )
             ])
           ],
         ),
@@ -335,33 +489,46 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         },
         tooltip: 'Increment',
-        label: const Text("เลือกภาพที่ต้องการ"),
+        label: const Text("เลือกภาพ"),
         icon: Image.network(
           "https://cdn-icons-png.flaticon.com/128/1837/1837512.png",
-          width: 30.0,
+          width: 35,
           height: 30.0,
           fit: BoxFit.fill,
+
           // color: Colors.grey,
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+        value: item,
+        child: Text(
+          item,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          // selectionColor: Colors.black,
+        ),
+      );
+}
+
+_lauchUrl() async {
+  const url =
+      'https://docs.google.com/spreadsheets/d/1BSrxKH_6NIMa2zJa1OSG8LgeBc2YoKmBt1Mla508Mrk/edit#gid=0';
+
+  // ignore: deprecated_member_use
+  if (await canLaunch(url)) {
+    // ignore: deprecated_member_use
+    await launch(url);
+  } else {
+    print("Try again");
   }
 }
 
-// _lauchUrl() async {
-//   const url =
-//       'https://docs.google.com/spreadsheets/d/1BSrxKH_6NIMa2zJa1OSG8LgeBc2YoKmBt1Mla508Mrk/edit#gid=0';
-
-//   // // ignore: deprecated_member_use
-//   // if (await canLaunch(url)) {
-//   //   // ignore: deprecated_member_use
-//   //   await launch(url);
-//   // } else {
-//   //   print("Try again");
-//   // }
-// }
-// Future<void> _launchUrl() async {
-//   if (!await launchUrl(_url)) {
-//     throw 'Could not launch $_url';
-//   }
-// }
+Future<void> _launchUrl() async {
+  if (!await launchUrl(_url)) {
+    throw 'Could not launch $_url';
+  }
+}

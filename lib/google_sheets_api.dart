@@ -123,7 +123,7 @@ class GoogleSheetsApi {
           await _worksheet!.values.value(column: 2, row: i + 1);
       final String transactionType =
           await _worksheet!.values.value(column: 3, row: i + 1);
-      final String transactionDay =
+      final String formattedDate =
           await _worksheet!.values.value(column: 4, row: i + 1);
 
       if (currentTransactions.length < numberOfTransactions) {
@@ -131,7 +131,7 @@ class GoogleSheetsApi {
           transactionName,
           transactionAmount,
           transactionType,
-          transactionDay,
+          formattedDate,
         ]);
       }
     }
